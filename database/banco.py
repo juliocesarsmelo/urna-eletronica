@@ -38,7 +38,4 @@ def criar_tabelas():
     """)
 
     conexao.commit()
-
     conexao.close()
-
-    print("Banco criado com sucesso!!!")
