@@ -70,4 +70,24 @@ def excluir_candidato():
     conexao.close()
 
     print("\nCandidato excluido com sucesso!!!")
+
+def buscar_candidato(numero):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""
+    SELECT * FROM candidatos
+    WHERE numero = ? """, 
+    (numero,))
+
+    candidato = cursor.fetchone()
+
+    conexao.close()
+
+    if candidato is None:
+        print("Candidato [inválido]")
+        return None
+    else:
+        print("Candidato [válido]")
+        return candidato
     
