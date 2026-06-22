@@ -73,7 +73,7 @@ def apurar_votos():
         else:
             for nome, total in resultados:
                 print(f"{nome}: {total} votos")
-            print(f"\n Vencedor: {resultados[0][0]}")
+            print(f"\nVencedor: {resultados[0][0]}")
     except Exception as e:
         print(f"\nErro ao apurar resultados: {e}")
     finally:
