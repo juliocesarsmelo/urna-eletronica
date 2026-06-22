@@ -40,7 +40,7 @@ def listar_candidatos():
         if not candidatos:
             print("\nNenhum candidato cadastrado.")
         else:
-            for id, numero, nome, partido in cursor.fetchall():
+            for id, numero, nome, partido in candidatos:
                 print(f"ID: {id} - Nº: {numero} - Nome: {nome} - Partido: {partido}")
 
     except Exception as e:
