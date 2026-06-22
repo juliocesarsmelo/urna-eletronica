@@ -36,7 +36,7 @@ def listar_eleitores():
     cursor = conexao.cursor()
 
     try:
-        cursor.execute("""SELECT * FROM candidatos""")
+        cursor.execute("""SELECT * FROM eleitores""")
         eleitores = cursor.fetchall()
 
         print("\n===== LISTA DE ELEITORES =====")
