@@ -21,4 +21,18 @@ def cadastrar_candidato():
         print("ERRO!!! número já cadastrado, por favor tente novamente.")
 
     conexao.close()
-    
+
+def listar_candidatos():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute("""SELECT * FROM candidatos""")
+
+    print("\n===== LISTA DE CANDIDATOS =====")
+
+    for _, numero, nome, partido in cursor.fetchall():
+        print(f"Nº: {numero} - Nome: {nome} - Partido: {partido}")
+
+    print("\n")
+
+    conexao.close()
