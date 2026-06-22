@@ -6,27 +6,50 @@ def votar():
     conexao = conectar()
     cursor = conexao.cursor()
 
-    cpf = input("Digite o CPF do eleitor: ")
+    try:
+        print("\n===== VOTAÇÃO =====")
+        cpf = input("Digite o CPF do eleitor: ").strip(".,:/-)(")
 
-    eleitor = buscar_eleitor_por_cpf(cpf) #necessário refatorar
+        if not cpf.isdigit() or len(cpf) != 11:
+            print("CPF inválido, digite apenas números com 11 dígitos.")
+            return
+        
+        eleitor = buscar_eleitor_por_cpf(cpf) 
 
-    listar_candidatos()
+        if not eleitor:
+            print("\nEleitor não encontrado")
+            return
+        
+        if eleitor[3] == 1:
+            print("\nEleitor já votou.")
+            return
+        
+        listar_candidatos()
 
-    numero = int(input("Digite o número do candidato: "))
+        numero = int(input("Digite o número do candidato: "))
 
-    candidato = buscar_candidato(numero) #necessário refatorar
+        candidato = buscar_candidato(numero)
 
-    cursor.execute("""
-    INSERT INTO votos (eleitor_id, candidato_id)
-    VALUES (?, ?)
-    """, (eleitor[0], candidato[0]))
+        if not candidato:
+            print("\nCandidato inválido.")
+            return
+        
+        cursor.execute("""
+        INSERT INTO votos (eleitor_id, candidato_id)
+        VALUES (?, ?) """, (eleitor[0], candidato[0]))
 
-    conexao.commit()
-    conexao.close()
+        conexao.commit()
 
-    atualizar_status_voto_eleitor(eleitor[0])
+        atualizar_status_voto_eleitor(eleitor[0])
 
-    print("Voto realizado com sucesso!!!")
+        print("\nVoto realizado com sucesso!!!")
+
+    except ValueError:
+        print("\nNúmero inválido, digite apenas números.")
+    except Exception as e:
+        print(f"\nErro ao registrar voto: {e}")
+    finally:
+        conexao.close()
 
     
     
