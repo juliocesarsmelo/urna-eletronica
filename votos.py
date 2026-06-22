@@ -51,5 +51,33 @@ def votar():
     finally:
         conexao.close()
 
+def apurar_votos():
+    conexao = conectar()
+    cursor = conexao.cursor() 
+
+    try:
+        cursor.execute("""
+        SELECT candidatos.nome, COUNT(votos.id) as total
+        FROM candidatos
+        LEFT JOIN votos ON candidatos.id = votos.candidato_id
+        GROUP BY candidatos.id
+        ORDER BY total DESC
+        """)
+
+        resultados = cursor.fetchall()
+
+        print("\n===== RESULTADO FINAL =====")
+
+        if not resultados:
+            print("Nenhum voto registrado.")
+        else:
+            for nome, total in resultados:
+                print(f"{nome}: {total} votos")
+            print(f"\n Vencedor: {resultados[0][0]}")
+    except Exception as e:
+        print(f"\nErro ao apurar resultados: {e}")
+    finally:
+        conexao.close()
+
     
     
