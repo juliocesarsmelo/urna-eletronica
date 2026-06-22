@@ -1,8 +1,15 @@
 from database.banco import criar_tabelas
-from candidatos import cadastrar_candidato, listar_candidatos
+from candidatos import *
 
 criar_tabelas()
 
-cadastrar_candidato()
+for i in range(5):
+    cadastrar_candidato()
+
+listar_candidatos()
+
+atualizar_candidato()
+
+excluir_candidato()
 
 listar_candidatos()
